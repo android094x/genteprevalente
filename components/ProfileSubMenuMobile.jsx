@@ -2,11 +2,11 @@ import Link from 'next/link';
 
 import { IoPerson, IoSettings, IoExit, IoMail } from 'react-icons/io5';
 
-const ProfileSubMenu = ({ show }) => {
+const ProfileSubMenuMobile = ({ show }) => {
   return (
     <>
       {show ? (
-        <div className='bg-GrayNavBarGDM absolute top-8 -left-12 w-48 px-8 py-4'>
+        <div className='bg-gray-600 w-48 px-8 py-4'>
           <ul className='space-y-4 '>
             <li>
               <Link href='/profile'>
@@ -47,4 +47,4 @@ const ProfileSubMenu = ({ show }) => {
   );
 };
 
-export default ProfileSubMenu;
+export default ProfileSubMenuMobile;

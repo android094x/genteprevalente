@@ -1,17 +1,33 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import ProfileSubMenu from './ProfileSubMenu';
 
 const NavBar = () => {
-  const [show, setShow] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    const onBodyClick = e => {
+      if (ref.current.contains(e.target)) return;
+      setShowProfileMenu(false);
+    };
+
+    document.body.addEventListener('click', onBodyClick, { capture: true });
+
+    return () => {
+      document.body.removeEventListener('click', onBodyClick, {
+        capture: true,
+      });
+    };
+  }, []);
 
   return (
-    <nav className='w-2/4'>
-      <ul className='flex justify-between w-full'>
+    <nav className='hidden lg w-1/2 lg:flex lg:items-center'>
+      <ul className='flex justify-between lg:w-full items-center'>
         <li>
-          <Link href='/'>
-            <a className='flex items-center'>
+          <Link href='/administration'>
+            <a className='flex items-center relative'>
               <img
                 src='/Gears-icon.svg'
                 width={16}
@@ -19,6 +35,9 @@ const NavBar = () => {
                 className='mr-2'
               />
               Administracion
+              <span className='absolute bg-red-600 -top-1 -right-4 rounded-full px-1 text-xs'>
+                2
+              </span>
             </a>
           </Link>
         </li>
@@ -42,7 +61,7 @@ const NavBar = () => {
           </Link>
         </li>
         <li>
-          <Link href='/'>
+          <Link href='/my-curriculum'>
             <a className='flex items-center'>
               <img src='/CV-icon.svg' width={16} height={16} className='mr-2' />{' '}
               Mi CV
@@ -51,7 +70,9 @@ const NavBar = () => {
         </li>
         <li
           className='flex items-center cursor-pointer relative'
-          onClick={e => setShow(!show)}>
+          ref={ref}
+          onClick={e => setShowProfileMenu(!showProfileMenu)}>
+          <img src='/avatar.png' alt='avatar' className='mr-2' />
           Daniel{' '}
           <img
             src='/ArrowDown-icon.svg'
@@ -59,7 +80,7 @@ const NavBar = () => {
             height={16}
             className='ml-2'
           />
-          <ProfileSubMenu show={show} />
+          <ProfileSubMenu show={showProfileMenu} />
         </li>
       </ul>
     </nav>
