@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { IoMenu } from 'react-icons/io5';
+import { IoClose, IoMenu } from 'react-icons/io5';
 
 import NavBar from './NavBar';
 import NavBarMobile from './NavBarMobile';
@@ -12,7 +12,7 @@ const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   return (
-    <header className='h-16 bg-GrayNavBarGDM text-white flex justify-between items-center px-8'>
+    <header className='h-16 bg-GrayNavBarGDM text-white flex justify-between items-center px-8 fixed w-full z-10'>
       <Link href='/'>
         <a className='flex'>
           <Image
@@ -42,11 +42,24 @@ const Header = () => {
         </label>
       </form>
       <NavBar />
-      <IoMenu
-        className='cursor-pointer lg:hidden text-2xl'
-        onClick={e => setShowMobileMenu(!showMobileMenu)}
-      />
-      {showMobileMenu && <NavBarMobile show={showMobileMenu} />}
+      {showMobileMenu ? (
+        <IoClose
+          className='cursor-pointer lg:hidden text-2xl'
+          onClick={e => setShowMobileMenu(!showMobileMenu)}
+        />
+      ) : (
+        <IoMenu
+          className='cursor-pointer lg:hidden text-2xl'
+          onClick={e => setShowMobileMenu(!showMobileMenu)}
+        />
+      )}
+      {showMobileMenu && (
+        <div
+          className='absolute top-0 left-0 h-screen-4rem mt-16 w-full bg-black opacity-30'
+          onClick={e => setShowMobileMenu(!showMobileMenu)}
+        />
+      )}
+      {showMobileMenu && <NavBarMobile />}
     </header>
   );
 };

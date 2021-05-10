@@ -8,8 +8,8 @@ const NavBarMobile = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <nav className='bg-GrayNavBarGDM flex flex-col items-center justify-center fixed top-16 right-0 h-screen-4rem w-8/12 sm:w-4/12  lg:hidden'>
-      <ul className='flex flex-col items-center justify-center space-y-8 pt-4 overflow-y-scroll '>
+    <nav className='bg-GrayNavBarGDM flex flex-col fixed top-16 right-0 h-screen-4rem w-8/12 sm:w-4/12 lg:hidden'>
+      <ul className='flex flex-col items-center space-y-8 p-4 overflow-y-scroll'>
         <li className='flex justify-center'>
           <form
             className=' w-8/12'

@@ -1,20 +1,27 @@
-import Head from "next/head";
+import Head from 'next/head';
+import ApplicationRequestCard from '../../components/ApplicationRequestCard';
+import Applicationrequests from '../../components/ApplicationRequests';
 
 export default function Home() {
   return (
-    <div>
+    <>
       <Head>
         <title>Solicitud de aprovación de empresas | Gente PreValente</title>
         <meta
-          name="description"
-          content="Gente PreValente - Prevalentware Prueba tecnica."
+          name='description'
+          content='Gente PreValente - Prevalentware Prueba tecnica.'
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <div>
-        <h1>Solicitudes de Creacion de empresas</h1>
+      <div className='min-h-screen-4rem'>
+        <h3>Something goes here</h3>
+        <div className='px-4 py-16 lg:my-0 container mx-auto'>
+          <ApplicationRequestCard />
+          <Applicationrequests />
+        </div>
+        <h3>Another thing goes here</h3>
       </div>
-    </div>
+    </>
   );
 }
