@@ -37,7 +37,7 @@ const ApplicationRequestCard = ({ item, currentRequest }) => {
   };
 
   return (
-    <div className='bg-white relative flex items-center justify-center flex-col rounded-xl pt-4 w-4/5 pb-16 lg:pb-32 order-2 lg:order-1'>
+    <div className='bg-white relative flex items-center justify-center flex-col rounded-xl p-4 w-4/5 pb-16 lg:pb-32 order-2 lg:order-1'>
       <figure>
         <img src={data.company_logo_url} alt='' />
       </figure>
