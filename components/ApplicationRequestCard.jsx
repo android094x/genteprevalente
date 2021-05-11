@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { motion, AnimatePresence } from 'framer-motion';
+
 import {
   approveRequest,
   rejectRequest,
@@ -43,7 +45,12 @@ const ApplicationRequestCard = ({
   };
 
   return (
-    <div className='bg-white relative flex items-center justify-center flex-col rounded-xl p-4 w-4/5 pb-16 lg:pb-32 order-2 lg:order-1'>
+    <motion.div
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ type: 'spring', duration: 1.5 }}
+      exit={{ scale: 0, opacity: 0, position: 'absolute' }}
+      className='bg-white relative flex items-center justify-center flex-col rounded-xl p-4 w-4/5 pb-16 lg:pb-32 order-2 lg:order-1'>
       <figure>
         <img src={data.company_logo_url} alt='' />
       </figure>
@@ -157,7 +164,7 @@ const ApplicationRequestCard = ({
           />
         </Modal>
       ) : null}
-    </div>
+    </motion.div>
   );
 };
 

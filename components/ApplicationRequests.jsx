@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { initializer } from '../redux/actions/requestsAction';
-
-import ApplicationRequestCard from './ApplicationRequestCard';
+import { AnimatePresence } from 'framer-motion';
 
 import { IoArrowForwardCircle, IoArrowBackCircle } from 'react-icons/io5';
+
+import { initializer } from '../redux/actions/requestsAction';
+import ApplicationRequestCard from './ApplicationRequestCard';
 
 const ApplicationRequests = () => {
   const [currentRequest, setCurrentRequest] = useState(0);
@@ -17,20 +18,22 @@ const ApplicationRequests = () => {
 
   return (
     <div className='px-4 py-8 lg:my-0 container mx-auto flex flex-col items-center'>
-      {items.length !== 0 ? (
-        items
-          .slice(currentRequest, currentRequest + 1)
-          .map(item => (
-            <ApplicationRequestCard
-              key={item.id}
-              item={item}
-              currentRequest={currentRequest}
-              setCurrentRequest={setCurrentRequest}
-            />
-          ))
-      ) : (
-        <h2 className='text-4xl'>No existen solicitudes pendientes</h2>
-      )}
+      <AnimatePresence>
+        {items.length !== 0 ? (
+          items
+            .slice(currentRequest, currentRequest + 1)
+            .map(item => (
+              <ApplicationRequestCard
+                key={item.id}
+                item={item}
+                currentRequest={currentRequest}
+                setCurrentRequest={setCurrentRequest}
+              />
+            ))
+        ) : (
+          <h2 className='text-4xl'>No existen solicitudes pendientes</h2>
+        )}
+      </AnimatePresence>
       {items.length > 0 && (
         <div className='flex items-center my-4 order-1 lg:order-2'>
           <button
