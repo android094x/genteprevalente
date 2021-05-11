@@ -7,7 +7,11 @@ import {
 import AttachedFilesModal from './AttachedFilesModal.jsx';
 import Modal from './Modal.jsx';
 
-const ApplicationRequestCard = ({ item, currentRequest }) => {
+const ApplicationRequestCard = ({
+  item,
+  currentRequest,
+  setCurrentRequest,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState(item);
   const [clickedButton, setClickedButton] = useState('');
@@ -22,6 +26,7 @@ const ApplicationRequestCard = ({ item, currentRequest }) => {
         status: 'APPROVED',
       }));
       dispatch(approveRequest(data), currentRequest);
+      if (currentRequest !== 0) setCurrentRequest(currentRequest - 1);
     }
     if (clickedButton === 'reject') {
       setData(prevData => ({
@@ -29,6 +34,7 @@ const ApplicationRequestCard = ({ item, currentRequest }) => {
         status: 'REJECTED',
       }));
       dispatch(rejectRequest(data), currentRequest);
+      if (currentRequest !== 0) setCurrentRequest(currentRequest - 1);
     }
   };
 
@@ -99,7 +105,9 @@ const ApplicationRequestCard = ({ item, currentRequest }) => {
         <div className='flex flex-col lg:hidden'>
           <h2 className='text-xl font-bold'>Documentos cargados</h2>
           {data.files.map(file => (
-            <div className='flex justify-between items-center w-full space-x-4 space-y-4 space'>
+            <div
+              key={file.file_name}
+              className='flex justify-between items-center w-full space-x-4 space-y-4 space'>
               <a
                 href={file.file_url}
                 target='_blank'

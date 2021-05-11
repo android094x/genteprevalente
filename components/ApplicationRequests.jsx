@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { initializer } from '../redux/actions/requestsAction';
 
@@ -11,25 +11,31 @@ const ApplicationRequests = () => {
   const dispatch = useDispatch();
   const items = useSelector(state => state);
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     dispatch(initializer());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!!items) dispatch(initializer());
   }, []);
+
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
 
   return (
     <div className='px-4 py-8 lg:my-0 container mx-auto flex flex-col items-center'>
       {items.length !== 0 ? (
         items
           .slice(currentRequest, currentRequest + 1)
-          .map(
-            item =>
-              item.status === 'PENDING' && (
-                <ApplicationRequestCard
-                  key={item.id}
-                  item={item}
-                  currentRequest={currentRequest}
-                />
-              )
-          )
+          .map(item => (
+            <ApplicationRequestCard
+              key={item.id}
+              item={item}
+              currentRequest={currentRequest}
+              setCurrentRequest={setCurrentRequest}
+            />
+          ))
       ) : (
         <h2 className='text-4xl'>No existen solicitudes pendientes</h2>
       )}
