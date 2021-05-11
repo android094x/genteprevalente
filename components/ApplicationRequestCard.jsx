@@ -1,27 +1,32 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import {
+  approveRequest,
+  rejectRequest,
+} from '../redux/actions/requestsAction.js';
 
-const ApplicationRequestCard = ({
-  id,
-  company_name,
-  business_name,
-  company_logo_url,
-  id_type,
-  employess,
-  files,
-}) => {
+const ApplicationRequestCard = ({ item, currentRequest }) => {
+  const [data, setData] = useState(item);
   const [clickedButton, setClickedButton] = useState('');
+  const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (clickedButton === 'approve') console.log('Approved');
-    if (clickedButton === 'reject') console.log('Rejected');
+    if (clickedButton === 'approve') {
+      const approvedApplication = { ...data, status: 'APPROVED' };
+      dispatch(approveRequest(approvedApplication));
+    }
+    if (clickedButton === 'reject') {
+      const rejectedApplication = { ...data, status: 'REJECTED' };
+      dispatch(rejectRequest(rejectedApplication));
+    }
   };
 
   return (
-    <div className='bg-white relative flex items-center flex-col rounded-xl p-4'>
+    <div className='bg-white relative flex items-center justify-center flex-col rounded-xl pt-4 w-4/5 pb-16 lg:pb-32 order-2 lg:order-1'>
       <figure>
-        <img src='/company_logo.png' alt='' />
+        <img src={data.company_logo_url} alt='' />
       </figure>
       <form
         onSubmit={handleSubmit}
@@ -30,7 +35,7 @@ const ApplicationRequestCard = ({
           <p className='text-xs text-gray-500'>Nombre de la Empresa</p>
           <input
             type='text'
-            defaultValue='Default Value'
+            defaultValue={data.company_name}
             className='border-b-2 border-GrayNavBarGDM font-bold uppercase w-full focus:outline-none p-1'
           />
         </label>
@@ -38,7 +43,7 @@ const ApplicationRequestCard = ({
           <p className='text-xs text-gray-500'>Razon Social</p>
           <input
             type='text'
-            defaultValue='Default Value'
+            defaultValue={data.business_name}
             className='border-b-2 border-GrayNavBarGDM font-bold uppercase w-full focus:outline-none p-1'
           />
         </label>
@@ -46,7 +51,7 @@ const ApplicationRequestCard = ({
           <p className='text-xs text-gray-500'>Tipo de identificacion</p>
           <input
             type='text'
-            defaultValue='Default Value'
+            defaultValue={data.id_type}
             className='border-b-2 border-GrayNavBarGDM font-bold uppercase w-full focus:outline-none p-1'
           />
         </label>
@@ -54,7 +59,7 @@ const ApplicationRequestCard = ({
           <p className='text-xs text-gray-500'>Identificacion</p>
           <input
             type='text'
-            defaultValue='Default Value'
+            defaultValue={data.id}
             className='border-b-2 border-GrayNavBarGDM font-bold uppercase w-full focus:outline-none p-1'
           />
         </label>
@@ -62,7 +67,7 @@ const ApplicationRequestCard = ({
           <p className='text-xs text-gray-500'># de empleados</p>
           <input
             type='text'
-            defaultValue='Default Value'
+            defaultValue={data.employees}
             className='border-b-2 border-GrayNavBarGDM font-bold uppercase w-full focus:outline-none p-1'
           />
         </label>
@@ -77,16 +82,6 @@ const ApplicationRequestCard = ({
           className='lg:absolute lg:top-24 lg:right-20 shadow-md p-4 w-48 font-bold rounded-xl focus:outline-none'>
           Rechazar Empresa
         </button>
-        {/* <button
-          onClick={() => setClickedButton('approve')}
-          className='absolute -bottom-16 lg:hidden shadow-md p-4 w-48 font-bold rounded-xl'>
-          Aprobar Empresa
-        </button>
-        <button
-          onClick={() => setClickedButton('reject')}
-          className='absolute -bottom-32 lg:hidden shadow-md p-4 w-48 font-bold rounded-xl'>
-          Rechazar Empresa
-        </button> */}
       </form>
     </div>
   );

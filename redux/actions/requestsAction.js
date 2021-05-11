@@ -4,21 +4,24 @@ import fakeDataFromDB from '../../fakeDataFromDB';
 export const initializer = () => {
   try {
     const data = fakeDataFromDB();
-    return {
-      type: INIT,
-      payload: data,
-    };
+    const withPendingStatus = [];
+
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].status === 'PENDING') withPendingStatus.push(data[i]);
+    }
+
+    return { type: INIT, payload: withPendingStatus };
   } catch (error) {
-    console.log("Data couldn't be 'Fetched'");
+    console.log("Data couldn't be 'Fetched'", error);
   }
 };
 
-export const approveRquest = approvedRequest => ({
+export const approveRequest = (approvedRequest, approvedRequestIdx) => ({
   type: APPROVE_REQUEST,
-  payload: approvedRequest,
+  payload: { approvedRequest, approvedRequestIdx },
 });
 
-export const rejectRequest = rejectedRequest => ({
+export const rejectRequest = (rejectedRequest, rejectedRequestIdx) => ({
   type: REJECT_REQUEST,
-  payload: rejectedRequest,
+  payload: { rejectedRequest, rejectedRequestIdx },
 });
