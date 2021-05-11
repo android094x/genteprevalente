@@ -7,6 +7,7 @@ module.exports = {
         BlueGDM: '#26B4FF',
         GrayNavBarGDM: '#2F3337',
         GrayGDM: '#E5E7EB',
+        ModalBG: 'rgba(0,0,0,0.2)',
       },
       height: {
         'screen-4rem': 'calc(100vh - 4rem)',
